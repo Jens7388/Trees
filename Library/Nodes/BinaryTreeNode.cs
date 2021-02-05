@@ -21,12 +21,18 @@ namespace Library
 
         public void AddLeftChild(T item)
         {
-            //TODO
+            if(_leftChild == null)
+            {
+                _leftChild = new BinaryTreeNode<T>(item);
+            }
         }
 
         public void AddRightChild(T item)
         {
-            //TODO
+            if(_rightChild == null)
+            {
+                _rightChild = new BinaryTreeNode<T>(item);
+            }
         }
 
         public BinaryTreeNode<T> LeftChild

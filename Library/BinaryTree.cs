@@ -23,19 +23,43 @@ namespace Library
             }
         }
 
-        public int GetCount()
+        public int Count
         {
-            throw new NotImplementedException();
+            get
+            {
+                return GetCount(_root, 0);
+            }
+        }
+
+        public int GetCount(BinaryTreeNode<T> node, int count)
+        {
+            if(node.LeftChild != null && node.RightChild != null)
+            {
+                count+=2;
+                GetCount(node.LeftChild, count);
+                GetCount(node.RightChild, count);
+            }
+            else if(node.LeftChild != null && node.RightChild == null)
+            {
+                count++;
+                GetCount(node.LeftChild, count);
+            }
+            else if(node.LeftChild == null && node.RightChild != null)
+            {
+                count++;
+                GetCount(node.RightChild, count);
+            }
+            return count;
         }
 
         public void AddLeftChildTo(BinaryTreeNode<T> parent, T leftChildItem)
         {
-            throw new NotImplementedException();
+            parent.AddLeftChild(leftChildItem);
         }
 
         public void AddRightChildTo(BinaryTreeNode<T> parent, T rightChildItem)
         {
-            throw new NotImplementedException();
+            parent.AddRightChild(rightChildItem);
         }
 
         public int GetHeight(BinaryTreeNode<T> root)
