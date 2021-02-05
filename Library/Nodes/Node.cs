@@ -6,7 +6,8 @@ namespace Library
 {
     public class Node<T>
     {
-        private T _item;
+        protected T _item;
+
         public Node()
         {
 
@@ -17,7 +18,7 @@ namespace Library
             _item = item;
         }
 
-        public T Item
+        public virtual T Item
         {
             get
             {
