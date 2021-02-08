@@ -27,7 +27,7 @@ namespace Library
         {
             get
             {
-                return GetCount(_root, 0);
+                return GetCount(_root, 1);
             }
         }
 
@@ -35,19 +35,15 @@ namespace Library
         {
             if(node.LeftChild != null && node.RightChild != null)
             {
-                count+=2;
-                GetCount(node.LeftChild, count);
-                GetCount(node.RightChild, count);
+                count += GetCount(node.LeftChild, count) + GetCount(node.RightChild, count);
             }
             else if(node.LeftChild != null && node.RightChild == null)
             {
-                count++;
-                GetCount(node.LeftChild, count);
+                count += GetCount(node.LeftChild, count);
             }
             else if(node.LeftChild == null && node.RightChild != null)
             {
-                count++;
-                GetCount(node.RightChild, count);
+                count += GetCount(node.RightChild, count);
             }
             return count;
         }
