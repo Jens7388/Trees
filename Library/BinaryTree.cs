@@ -64,7 +64,23 @@ namespace Library
 
         public int GetHeight(BinaryTreeNode<T> root)
         {
-            throw new NotImplementedException();
+            if(root == null)
+            {
+                return 0;
+            }
+            else
+            {
+                int leftHeight = GetHeight(root.LeftChild) + 1;
+                int rightHeight = GetHeight(root.RightChild) + 1;
+                if(leftHeight > rightHeight)
+                {
+                    return leftHeight;
+                }
+                else
+                {
+                    return rightHeight;
+                }
+            }
         }
 
         public string ToStringLevel(int level, BinaryTreeNode<T> root)
