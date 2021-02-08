@@ -85,12 +85,32 @@ namespace Library
 
         public string ToStringLevel(int level, BinaryTreeNode<T> root)
         {
-            throw new NotImplementedException();
+            if(root == null)
+            {
+                return null;
+            }
+            else
+            {
+                string left ="";
+                string right ="";
+                for(int i = 0; i < level; i++)
+                {
+                    left = ToStringLevel(level, root.LeftChild);
+                    right = ToStringLevel(level, root.RightChild);
+                }
+                return $"level {level}:  Left: {left}, right: {right} \n";
+            }
         }
 
-        public int ToStringLevelOrder()
+        public string ToStringLevelOrder()
         {
-            throw new NotImplementedException();
+            int length = GetHeight(Root);
+            string tree = "";
+            for(int i = 0; i < length; i++)
+            {
+                tree += ToStringLevel(i, Root);
+            }
+            return tree;
         }
     }
 }
