@@ -15,7 +15,7 @@ namespace Library.Interfaces
 
         public string ToStringLevel(int level, BinaryTreeNode<T> root);
 
-        public int ToStringLevelOrder();
+        public string ToStringLevelOrder();
 
         public void AddLeftChildTo(BinaryTreeNode<T> parent, T leftChildItem);
 
