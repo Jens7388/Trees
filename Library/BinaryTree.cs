@@ -87,14 +87,46 @@ namespace Library
             }
             else
             {
-                string left ="";
-                string right ="";
+                BinaryTreeNode<T> left = root.LeftChild; 
+                BinaryTreeNode<T> right = root.RightChild; 
                 for(int i = 0; i < level; i++)
                 {
-                    left = ToStringLevel(level, root.LeftChild);
-                    right = ToStringLevel(level, root.RightChild);
+                    left = FindChildren(left);
+                    right = FindChildren(right);
                 }
+
                 return $"level {level}:  Left: {left}, right: {right} \n";
+            }
+        }
+
+        public BinaryTreeNode<T> FindChildren(BinaryTreeNode<T> root)
+        {
+            if(root != null)
+            {
+                if(root.LeftChild != null && root.RightChild != null)
+                {
+                    FindChildren(root.LeftChild);
+                    FindChildren(root.RightChild);
+                }
+
+                if(root.LeftChild != null)
+                {
+                    return root.LeftChild;
+                }
+
+                if(root.RightChild != null)
+                {
+                    return root.RightChild;
+                }
+
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
             }
         }
 
