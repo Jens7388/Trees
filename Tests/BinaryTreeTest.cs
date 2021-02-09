@@ -63,6 +63,7 @@ namespace Tests
             tree.AddLeftChildTo(root.LeftChild, 1);
             tree.AddRightChildTo(root.RightChild, 1);
             tree.AddLeftChildTo(root.RightChild.RightChild, 1);
+            tree.AddLeftChildTo(root.LeftChild.LeftChild, 1);
             tree.AddRightChildTo(root.RightChild.RightChild, 2);
             return tree.ToStringLevel(4, tree.Root);
         }

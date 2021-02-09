@@ -102,8 +102,8 @@ namespace Library
         public string ToStringLevelOrder()
         {
             int length = GetHeight(Root);
-            string tree = $"Root: {Root}\n";
-            for(int i = 1; i < length; i++)
+            string tree ="";
+            for(int i = 0; i <= length; i++)
             {
                 tree += ToStringLevel(i, Root);
             }
