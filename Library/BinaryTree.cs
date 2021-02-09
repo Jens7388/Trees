@@ -107,7 +107,53 @@ namespace Library
             {
                 tree += ToStringLevel(i, Root);
             }
+
             return tree;
+        }
+
+        public string PostOrder(BinaryTreeNode<T> node)
+        {
+            string toReturn = "";
+            if(node != null)
+            {
+                toReturn += PostOrder(node.LeftChild);
+                toReturn += PostOrder(node.RightChild);
+                toReturn += node + " ";
+            }
+
+            return toReturn;
+        }
+
+        public string InOrder(BinaryTreeNode<T> node)
+        {
+            string toReturn = "";
+            if(node.LeftChild != null)
+            {              
+                toReturn += InOrder(node.LeftChild);
+            }
+
+            toReturn += node + " ";
+
+            if(node.RightChild != null)
+            {
+                toReturn += InOrder(node.RightChild);
+            }    
+
+            return toReturn;
+        }
+
+        public string PreOrder(BinaryTreeNode<T> node)
+        {
+            string toReturn = "";
+            
+            if(node != null)
+            {
+                toReturn += node + " ";
+                toReturn += PreOrder(node.LeftChild);
+                toReturn += PreOrder(node.RightChild);
+            }
+                           
+            return toReturn;
         }
     }
 }
