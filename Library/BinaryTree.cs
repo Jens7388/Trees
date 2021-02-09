@@ -81,60 +81,29 @@ namespace Library
 
         public string ToStringLevel(int level, BinaryTreeNode<T> root)
         {
+            string toReturn = "";
             if(root == null)
             {
-                return null;
+                return "";
             }
-            else
+            if(level == 1)
             {
-                BinaryTreeNode<T> left = root.LeftChild; 
-                BinaryTreeNode<T> right = root.RightChild; 
-                for(int i = 0; i < level; i++)
-                {
-                    left = FindChildren(left);
-                    right = FindChildren(right);
-                }
-
-                return $"level {level}:  Left: {left}, right: {right} \n";
+                toReturn += root.ToString() + " ";
+                return toReturn;
             }
-        }
-
-        public BinaryTreeNode<T> FindChildren(BinaryTreeNode<T> root)
-        {
-            if(root != null)
+            else if(level > 1)
             {
-                if(root.LeftChild != null && root.RightChild != null)
-                {
-                    FindChildren(root.LeftChild);
-                    FindChildren(root.RightChild);
-                }
-
-                if(root.LeftChild != null)
-                {
-                    return root.LeftChild;
-                }
-
-                if(root.RightChild != null)
-                {
-                    return root.RightChild;
-                }
-
-                else
-                {
-                    return null;
-                }
+                toReturn += ToStringLevel(level - 1, root.LeftChild);
+                toReturn += ToStringLevel(level - 1, root.RightChild);
             }
-            else
-            {
-                return null;
-            }
-        }
+            return toReturn;
+        }   
 
         public string ToStringLevelOrder()
         {
             int length = GetHeight(Root);
-            string tree = "";
-            for(int i = 0; i < length; i++)
+            string tree = $"Root: {Root}\n";
+            for(int i = 1; i < length; i++)
             {
                 tree += ToStringLevel(i, Root);
             }

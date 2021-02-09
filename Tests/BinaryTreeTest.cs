@@ -62,8 +62,22 @@ namespace Tests
             tree.AddRightChildTo(root, 1);
             tree.AddLeftChildTo(root.LeftChild, 1);
             tree.AddRightChildTo(root.RightChild, 1);
+            tree.AddLeftChildTo(root.RightChild.RightChild, 1);
+            tree.AddRightChildTo(root.RightChild.RightChild, 2);
+            return tree.ToStringLevel(4, tree.Root);
+        }
+
+        [Fact]
+        public string TestToStringLevelOrder()
+        {
+            BinaryTreeNode<int> root = new(2);
+            BinaryTree<int> tree = new(root);
+            tree.AddLeftChildTo(root, 1);
+            tree.AddRightChildTo(root, 1);
+            tree.AddLeftChildTo(root.LeftChild, 1);
+            tree.AddRightChildTo(root.RightChild, 1);
             tree.AddLeftChildTo(root.RightChild.RightChild, 2);
-            return tree.ToStringLevel(1, tree.Root);
+            return tree.ToStringLevelOrder();
         }
     }
 }
