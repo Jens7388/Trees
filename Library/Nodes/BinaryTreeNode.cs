@@ -6,8 +6,8 @@ namespace Library
 {
     public class BinaryTreeNode<T>: TreeNode<T>
     {
-        private BinaryTreeNode<T> _leftChild;
-        private BinaryTreeNode<T> _rightChild;
+        protected BinaryTreeNode<T> _leftChild;
+        protected BinaryTreeNode<T> _rightChild;
 
         public BinaryTreeNode()
         {
@@ -19,7 +19,7 @@ namespace Library
             _item = item;
         }
 
-        public void AddLeftChild(T item)
+        public virtual void AddLeftChild(T item)
         {
             if(_leftChild == null)
             {
@@ -27,7 +27,7 @@ namespace Library
             }
         }
 
-        public void AddRightChild(T item)
+        public virtual void AddRightChild(T item)
         {
             if(_rightChild == null)
             {
@@ -35,7 +35,7 @@ namespace Library
             }
         }
 
-        public BinaryTreeNode<T> LeftChild
+        public virtual BinaryTreeNode<T> LeftChild
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Library
             }
         }
 
-        public BinaryTreeNode<T> RightChild
+        public virtual BinaryTreeNode<T> RightChild
         {
             get
             {

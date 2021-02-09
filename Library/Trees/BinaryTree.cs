@@ -8,14 +8,14 @@ namespace Library
 {
     public class BinaryTree<T>: IBinaryTree<T>
     {
-        private BinaryTreeNode<T> _root;
+        protected BinaryTreeNode<T> _root;
 
         public BinaryTree(BinaryTreeNode<T> root)
         {
             _root = root;
         }
 
-        public BinaryTreeNode<T> Root
+        public virtual BinaryTreeNode<T> Root
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Library
             }
         }
 
-        public int Count
+        public virtual int Count
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Library
             }
         }
 
-        public int GetCount(BinaryTreeNode<T> node, int count)
+        public virtual int GetCount(BinaryTreeNode<T> node, int count)
         {
             if(node.LeftChild != null && node.RightChild != null)
             {
@@ -48,30 +48,33 @@ namespace Library
             return count;
         }
 
-        public void AddLeftChildTo(BinaryTreeNode<T> parent, T leftChildItem)
+        public virtual void AddLeftChildTo(BinaryTreeNode<T> parent, T leftChildItem)
         {
             parent.AddLeftChild(leftChildItem);
         }
 
-        public void AddRightChildTo(BinaryTreeNode<T> parent, T rightChildItem)
+        public virtual void AddRightChildTo(BinaryTreeNode<T> parent, T rightChildItem)
         {
             parent.AddRightChild(rightChildItem);
         }
 
-        public int GetHeight(BinaryTreeNode<T> root)
+        public virtual int GetHeight(BinaryTreeNode<T> root)
         {
             if(root == null)
             {
                 return 0;
             }
+
             else
             {
                 int leftHeight = GetHeight(root.LeftChild) + 1;
                 int rightHeight = GetHeight(root.RightChild) + 1;
+
                 if(leftHeight > rightHeight)
                 {
                     return leftHeight;
                 }
+
                 else
                 {
                     return rightHeight;
@@ -79,30 +82,35 @@ namespace Library
             }
         }
 
-        public string ToStringLevel(int level, BinaryTreeNode<T> root)
+        public virtual string ToStringLevel(int level, BinaryTreeNode<T> root)
         {
             string toReturn = "";
+
             if(root == null)
             {
                 return "";
             }
+
             if(level == 1)
             {
                 toReturn += root.ToString() + " ";
                 return toReturn;
             }
+
             else if(level > 1)
             {
                 toReturn += ToStringLevel(level - 1, root.LeftChild);
                 toReturn += ToStringLevel(level - 1, root.RightChild);
             }
+
             return toReturn;
         }   
 
-        public string ToStringLevelOrder()
+        public virtual string ToStringLevelOrder()
         {
             int length = GetHeight(Root);
             string tree ="";
+
             for(int i = 0; i <= length; i++)
             {
                 tree += ToStringLevel(i, Root);
@@ -111,9 +119,10 @@ namespace Library
             return tree;
         }
 
-        public string PostOrder(BinaryTreeNode<T> node)
+        public virtual string PostOrder(BinaryTreeNode<T> node)
         {
             string toReturn = "";
+
             if(node != null)
             {
                 toReturn += PostOrder(node.LeftChild);
@@ -124,7 +133,7 @@ namespace Library
             return toReturn;
         }
 
-        public string InOrder(BinaryTreeNode<T> node)
+        public virtual string InOrder(BinaryTreeNode<T> node)
         {
             string toReturn = "";
             if(node.LeftChild != null)
@@ -142,7 +151,7 @@ namespace Library
             return toReturn;
         }
 
-        public string PreOrder(BinaryTreeNode<T> node)
+        public virtual string PreOrder(BinaryTreeNode<T> node)
         {
             string toReturn = "";
             
