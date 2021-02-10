@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Library.Trees
 {
-    public class BinarySearchTree<T>: IBinarySearchTree<T>
+    public class BinarySearchTree: IBinarySearchTree<int>
     {
         protected BinarySearchTreeNode _root;
 
@@ -66,6 +66,32 @@ namespace Library.Trees
             {
                 Root.Insert(item);
             }
+        }
+
+        public virtual void InsertMany(List<int> nodes)
+        {
+            foreach (int node in nodes)
+            {
+                Insert(node);
+            }
+        }
+
+        public virtual string InOrder(BinarySearchTreeNode node)
+        {
+            string toReturn = "";
+            if(node.LeftChild != null)
+            {
+                toReturn += InOrder(node.LeftChild);
+            }
+
+            toReturn += node + " ";
+
+            if(node.RightChild != null)
+            {
+                toReturn += InOrder(node.RightChild);
+            }
+
+            return toReturn;
         }
     }
 }

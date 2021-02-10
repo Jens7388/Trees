@@ -29,17 +29,20 @@ namespace Library.Nodes
                 {
                     _leftChild = new BinarySearchTreeNode(item);
                 }
+
                 else
                 {
                     LeftChild.Insert(item);
                 }
             }
+
             else if (Item < item)
             {
                 if(RightChild == null)
                 {
                     _rightChild = new BinarySearchTreeNode(item);
                 }
+
                 else
                 {
                     RightChild.Insert(item);
