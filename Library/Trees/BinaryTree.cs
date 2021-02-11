@@ -10,6 +10,11 @@ namespace Library
     {
         protected BinaryTreeNode<T> _root;
 
+        public BinaryTree()
+        {
+
+        }
+
         public BinaryTree(BinaryTreeNode<T> root)
         {
             _root = root;

@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace Library.Nodes
 {
-    public class BinarySearchTreeNode : TreeNode<int>
+    public class BinarySearchTreeNode<T> : TreeNode<T> where T: IComparable<T>
     {
-        protected BinarySearchTreeNode _leftChild;
-        protected BinarySearchTreeNode _rightChild;
+        protected BinarySearchTreeNode<T> _leftChild;
+        protected BinarySearchTreeNode<T> _rightChild;
 
         public BinarySearchTreeNode()
         {
 
         }
 
-        public BinarySearchTreeNode(int item)
+        public BinarySearchTreeNode(T item)
         {
             _item = item;
         }
 
-        public virtual void Insert(int item)
+        public virtual void Insert(T item)
         {
-            if(Item > item)
+            if(Item.CompareTo(item) > 0)
             {
                 if(LeftChild == null)
                 {
-                    _leftChild = new BinarySearchTreeNode(item);
+                    _leftChild = new BinarySearchTreeNode<T>(item);
                 }
 
                 else
@@ -36,11 +36,11 @@ namespace Library.Nodes
                 }
             }
 
-            else if (Item < item)
+            else if (Item.CompareTo(item) < 0)
             {
                 if(RightChild == null)
                 {
-                    _rightChild = new BinarySearchTreeNode(item);
+                    _rightChild = new BinarySearchTreeNode<T>(item);
                 }
 
                 else
@@ -50,7 +50,7 @@ namespace Library.Nodes
             }
         }
 
-        public virtual BinarySearchTreeNode LeftChild
+        public virtual BinarySearchTreeNode<T> LeftChild
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Library.Nodes
             }
         }
 
-        public virtual BinarySearchTreeNode RightChild
+        public virtual BinarySearchTreeNode<T> RightChild
         {
             get
             {

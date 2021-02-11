@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace Library.Trees
 {
-    public class BinarySearchTree: IBinarySearchTree<int>
+    public class BinarySearchTree<T>: IComparable, IBinarySearchTree<T> where T : IComparable<T>
     {
-        protected BinarySearchTreeNode _root;
+        protected BinarySearchTreeNode<T> _root;
 
         public BinarySearchTree()
         {
 
         }
 
-        public BinarySearchTree(BinarySearchTreeNode root)
+        public BinarySearchTree(BinarySearchTreeNode<T> root)
         {
             _root = root;
         }
 
-        public virtual BinarySearchTreeNode Root
+        public virtual BinarySearchTreeNode<T> Root
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Library.Trees
             }
         }
 
-        public virtual int GetCount(BinarySearchTreeNode node, int count)
+        public virtual int GetCount(BinarySearchTreeNode<T> node, int count)
         {
             if(node.LeftChild != null && node.RightChild != null)
             {
@@ -56,11 +56,11 @@ namespace Library.Trees
             return count;
         }
 
-        public virtual void Insert(int item)
+        public virtual void Insert(T item)
         {
             if(_root == null)
             {
-                _root = new BinarySearchTreeNode(item);
+                _root = new BinarySearchTreeNode<T>(item);
             }
             else
             {
@@ -68,15 +68,15 @@ namespace Library.Trees
             }
         }
 
-        public virtual void InsertMany(List<int> nodes)
+        public virtual void InsertMany(List<T> nodes)
         {
-            foreach (int node in nodes)
+            foreach (T node in nodes)
             {
                 Insert(node);
             }
         }
 
-        public virtual string InOrder(BinarySearchTreeNode node)
+        public virtual string InOrder(BinarySearchTreeNode<T> node)
         {
             string toReturn = "";
             if(node.LeftChild != null)
@@ -92,6 +92,11 @@ namespace Library.Trees
             }
 
             return toReturn;
+        }
+
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
