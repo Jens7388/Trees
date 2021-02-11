@@ -6,69 +6,63 @@ using System.Threading.Tasks;
 
 namespace Library.Heaps
 {
-    public class MinHeap<T>: BinaryTree<T> where T: IComparable<T>
+    public class MinHeap<T>: BinaryTree<T> where T : IComparable<T>
     {
-        protected BinaryTreeNode<T>[] heapArray;
+        protected List<BinaryTreeNode<T>> items;
         protected int count;
 
-        public MinHeap(int size)
+        public MinHeap()
         {
-            heapArray = new BinaryTreeNode<T>[size]; 
+            items = new List<BinaryTreeNode<T>>(); 
         }
 
-        public MinHeap(BinaryTreeNode<T> root, int size)
+        public MinHeap(BinaryTreeNode<T> root)
         {
-            heapArray = new BinaryTreeNode<T>[size];
-            heapArray[0] = root;
-            _root = heapArray[0];
+            items = new List<BinaryTreeNode<T>>();
+            items[0] = root;
         }
 
-        public BinaryTreeNode<T>[] HeapArray
+        public List<BinaryTreeNode<T>> Items
         {
             get 
             {
-                return heapArray;
+                return items;
             }
         }
 
-        public virtual int GetCount()
+        public override BinaryTreeNode<T> Root
         {
-            foreach(BinaryTreeNode<T> node in HeapArray)
+            get
             {
-                if(node != null)
-                {
-                    count++;
-                }
+                return items[0];
             }
-            return count;
+        }
+
+        public override int Count
+        {
+            get
+            {
+                return items.Count;
+            }
         }
 
         public virtual void Insert(BinaryTreeNode<T> node)
         {
-            int i = count;
-            if(count == 0)
+            int i = count - 1;
+            items[i] = node;
+            while(i > 0 && items[i].Item.CompareTo(items[i / 2].Item) == -1)
             {
-                heapArray[i] = node;
-                _root = node;
-                count++;
+                (items[i], items[i / 2]) = (items[i / 2], items[i]);
+                i /= 2;
             }
-            
         }
 
         public virtual BinaryTreeNode<T> Extract(int index)
         {
             if(index <= count)
             {
-                BinaryTreeNode<T> extractedNode = heapArray[index];
-                heapArray[index] = null;
-                if(index != count)
-                {
-                    for(int i = index; i < count; i++)
-                    {
-                        heapArray[count - 1] = heapArray[i];
-                    }
-                }
-                count--;
+                BinaryTreeNode<T> extractedNode = items[index];
+                items.Remove(items[index]);
                 return extractedNode;
             }
             else
@@ -81,7 +75,7 @@ namespace Library.Heaps
         {
             if(index <= count)
             {
-                return heapArray[index];
+                return items[index];
             }
             else
             {
@@ -91,11 +85,12 @@ namespace Library.Heaps
 
         public virtual void Delete()
         {
-            for(int i = 0; i < count; i++)
-            {
-                heapArray[i] = null;
-            }
-            count = 0;
+            Items.RemoveAll(null!);
+        }
+
+        public void Heapify(List<T> items)
+        {
+            //TODO!
         }
     }
 }

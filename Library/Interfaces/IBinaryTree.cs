@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Library.Interfaces
 {
-    public interface IBinaryTree<T> : INonLinearDataStructure<T>
+    public interface IBinaryTree<T> : INonLinearDataStructure<T> where T : IComparable<T>
     {
         public BinaryTreeNode<T> Root
         {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Library
 {
-    public class BinaryTree<T>: IBinaryTree<T>
+    public class BinaryTree<T>: IBinaryTree<T> where T : IComparable<T>
     {
         protected BinaryTreeNode<T> _root;
 
@@ -56,11 +56,13 @@ namespace Library
         public virtual void AddLeftChildTo(BinaryTreeNode<T> parent, T leftChildItem)
         {
             parent.AddLeftChild(leftChildItem);
+            parent.LeftChild.Parent = parent;
         }
 
         public virtual void AddRightChildTo(BinaryTreeNode<T> parent, T rightChildItem)
         {
             parent.AddRightChild(rightChildItem);
+            parent.RightChild.Parent = parent;
         }
 
         public virtual int GetHeight(BinaryTreeNode<T> root)

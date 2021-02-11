@@ -4,10 +4,11 @@ using System.Text;
 
 namespace Library
 {
-    public class BinaryTreeNode<T>: TreeNode<T>
+    public class BinaryTreeNode<T>: TreeNode<T> where T : IComparable<T>
     {
         protected BinaryTreeNode<T> _leftChild;
         protected BinaryTreeNode<T> _rightChild;
+        protected new BinaryTreeNode<T> _parent;
 
         public BinaryTreeNode()
         {
@@ -17,6 +18,12 @@ namespace Library
         public BinaryTreeNode(T item)
         {
             _item = item;
+        }
+
+        public BinaryTreeNode(T item, BinaryTreeNode<T> parent)
+        {
+            _item = item;
+            _parent = parent;
         }
 
         public virtual void AddLeftChild(T item)
@@ -48,6 +55,18 @@ namespace Library
             get
             {
                 return _rightChild;
+            }
+        }
+
+        public virtual new BinaryTreeNode<T> Parent
+        {
+            get
+            {
+                return _parent;
+            }
+            set
+            {
+                _parent = value;
             }
         }
     }

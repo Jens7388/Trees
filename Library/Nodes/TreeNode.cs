@@ -6,7 +6,7 @@ namespace Library
 {
     public class TreeNode<T> : Node<T>
     {
-        private TreeNode<T> _parent;
+        protected TreeNode<T> _parent;
 
         public TreeNode()
         {
@@ -29,11 +29,15 @@ namespace Library
             _parent = parent;
         }
 
-        public TreeNode<T> Parent
+        public virtual TreeNode<T> Parent
         {
             get
             {
                 return _parent;
+            }
+            set
+            {
+                _parent = value;
             }
         }
     }

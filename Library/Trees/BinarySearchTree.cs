@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Library.Trees
 {
-    public class BinarySearchTree<T>: IComparable, IBinarySearchTree<T> where T : IComparable<T>
+    public class BinarySearchTree<T>: IBinarySearchTree<T> where T : IComparable<T>
     {
         protected BinarySearchTreeNode<T> _root;
 
@@ -92,11 +92,6 @@ namespace Library.Trees
             }
 
             return toReturn;
-        }
-
-        public int CompareTo(object obj)
-        {
-            throw new NotImplementedException();
         }
     }
 }
