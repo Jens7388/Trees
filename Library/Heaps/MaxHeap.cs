@@ -49,7 +49,7 @@ namespace Library.Heaps
         {
             if(Root == null)
             {
-                Root.Item = node.Item;
+                Items[0] = node;
             }
             else
             {
@@ -117,12 +117,13 @@ namespace Library.Heaps
             Items.RemoveAll(null!);
         }
 
-        public void ReOrderOnInsertion(BinaryTreeNode<T> node, BinaryTreeNode<T> root)
+        public void ReOrderOnInsertion(BinaryTreeNode<T> node, BinaryTreeNode<T> root, int index)
         {
             if(root.Item.CompareTo(node.Item) == -1)
             {
                 (root.Item, node.Item) = (node.Item, root.Item);
-                ReOrderOnInsertion(node, node.Parent);
+                node.Parent = items[index / 2];
+                ReOrderOnInsertion(root, root.Parent, index / 2);
             }
         }
 
@@ -137,7 +138,7 @@ namespace Library.Heaps
                     node.Parent = root;
                 }
 
-                else if(node.RightChild == null)
+                else if(root.RightChild == null)
                 {
                     Items.Add(node);
                     root.RightChild = node;
@@ -145,24 +146,42 @@ namespace Library.Heaps
                 }
                 else
                 {
-                    if(root.LeftChild.LeftChild == null || root.LeftChild.RightChild == null)
+                    if(node.Item.CompareTo(root.LeftChild.Item) == 1)
                     {
-                        AddToHeap(node, root.LeftChild);
+                        BinaryTreeNode<T> tmp = root.LeftChild;
+                        root.LeftChild = node;
+                        AddToHeap(tmp, Root);
                     }
-                    else if(root.RightChild.LeftChild == null || root.RightChild.RightChild == null)
+
+                    else if(node.Item.CompareTo(root.RightChild.Item) == 1)
                     {
-                        AddToHeap(node, root.RightChild);
+                        BinaryTreeNode<T> tmp = root.RightChild;
+                        root.RightChild = node;
+                        AddToHeap(tmp, Root);
                     }
+
                     else
                     {
-                        AddToHeap(node, root.LeftChild.LeftChild);
+                        if(root.LeftChild.LeftChild == null || root.LeftChild.RightChild == null)
+                        {
+                            AddToHeap(node, root.LeftChild);
+                        }
+                        else if(root.RightChild.LeftChild == null || root.RightChild.RightChild == null)
+                        {
+                            AddToHeap(node, root.RightChild);
+                        }
+                        else
+                        {
+                            AddToHeap(node, root.LeftChild.LeftChild);
+                        }
                     }
                 }
             }
             else
             {
                 items.Add(node);
-                ReOrderOnInsertion(node, root);
+                node.Parent = items[Count / 2];
+                ReOrderOnInsertion(node, root, Count / 2);
             }
         }
     }

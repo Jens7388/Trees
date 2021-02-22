@@ -28,5 +28,23 @@ namespace Tests
             MinHeap<int> minHeap = new();
             minHeap.Insert(new BinaryTreeNode<int>(5));
         }
+
+        [Fact]
+        public void TestMaxHeapInsertions()
+        {
+            MaxHeap<int> maxHeap = new();
+            maxHeap.Insert(new BinaryTreeNode<int>(20));
+            maxHeap.Insert(new BinaryTreeNode<int>(19));
+            maxHeap.Insert(new BinaryTreeNode<int>(17));
+            maxHeap.Insert(new BinaryTreeNode<int>(18));
+            maxHeap.Insert(new BinaryTreeNode<int>(12));
+            maxHeap.Insert(new BinaryTreeNode<int>(14));
+            maxHeap.Insert(new BinaryTreeNode<int>(25));
+            maxHeap.Insert(new BinaryTreeNode<int>(13));
+            maxHeap.Insert(new BinaryTreeNode<int>(22));
+            maxHeap.Insert(new BinaryTreeNode<int>(11));
+            maxHeap.Insert(new BinaryTreeNode<int>(5));
+            maxHeap.Insert(new BinaryTreeNode<int>(3));
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace Library.Heaps
         {
             if(Root == null)
             {
-                Root.Item = node.Item;
+                Items[0] = node;
             }
             else
             {
@@ -136,7 +136,7 @@ namespace Library.Heaps
                     node.Parent = root;
                 }
 
-                else if(node.RightChild == null)
+                else if(root.RightChild == null)
                 {
                     Items.Add(node);
                     root.RightChild = node;
@@ -161,6 +161,7 @@ namespace Library.Heaps
             else
             {
                 items.Add(node);
+                node.Parent = root;
                 ReOrderOnInsertion(node, root);
             }
         }
