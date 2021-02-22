@@ -56,6 +56,10 @@ namespace Library.Nodes
             {
                 return _leftChild;
             }
+            set
+            {
+                _leftChild = value;
+            }
         }
 
         public virtual BinarySearchTreeNode<T> RightChild
@@ -63,6 +67,10 @@ namespace Library.Nodes
             get
             {
                 return _rightChild;
+            }
+            set
+            {
+                _rightChild = value;
             }
         }
     }

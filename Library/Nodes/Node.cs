@@ -24,6 +24,10 @@ namespace Library
             {
                 return _item;
             }
+            set
+            {
+                _item = value;
+            }
         }
 
         public override string ToString()

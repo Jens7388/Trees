@@ -13,13 +13,12 @@ namespace Library.Heaps
 
         public MinHeap()
         {
-            items = new List<BinaryTreeNode<T>>(); 
+            items = new List<BinaryTreeNode<T>>() { null }; 
         }
 
         public MinHeap(BinaryTreeNode<T> root)
         {
-            items = new List<BinaryTreeNode<T>>();
-            items[0] = root;
+            items = new List<BinaryTreeNode<T>>() {root};
         }
 
         public List<BinaryTreeNode<T>> Items
@@ -48,12 +47,13 @@ namespace Library.Heaps
 
         public virtual void Insert(BinaryTreeNode<T> node)
         {
-            int i = count - 1;
-            items[i] = node;
-            while(i > 0 && items[i].Item.CompareTo(items[i / 2].Item) == -1)
+            if(Root == null)
             {
-                (items[i], items[i / 2]) = (items[i / 2], items[i]);
-                i /= 2;
+                Root.Item = node.Item;
+            }
+            else
+            {
+                AddToHeap(node, Root);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Library.Heaps
             if(index <= count)
             {
                 BinaryTreeNode<T> extractedNode = items[index];
-                items.Remove(items[index]);
+                ReOrderOnExtraction(extractedNode);
                 return extractedNode;
             }
             else
@@ -88,9 +88,81 @@ namespace Library.Heaps
             Items.RemoveAll(null!);
         }
 
-        public void Heapify(List<T> items)
+        public void ReOrderOnExtraction(BinaryTreeNode<T> node)
         {
-            //TODO!
+            if(node.LeftChild != null && node.RightChild != null)
+            {
+                if(node.LeftChild.Item.CompareTo(node.RightChild.Item) == 1)
+                {
+                    node.Item = node.LeftChild.Item;
+                    ReOrderOnExtraction(node.LeftChild);
+                }
+                else
+                {
+                    node.Item = node.RightChild.Item;
+                    ReOrderOnExtraction(node.RightChild);
+                }
+            }
+
+            else if(node.LeftChild != null && node.RightChild == null)
+            {
+                node.Item = node.LeftChild.Item;
+                items.Remove(node.LeftChild);
+            }
+
+            else
+            {
+                return;
+            }
+        }
+
+        public void ReOrderOnInsertion(BinaryTreeNode<T> node, BinaryTreeNode<T> root)
+        {
+            if(root.Item.CompareTo(node.Item) == 1)
+            {
+                (root.Item, node.Item) = (node.Item, root.Item);
+                ReOrderOnInsertion(node, node.Parent);
+            }
+        }
+
+        public void AddToHeap(BinaryTreeNode<T> node, BinaryTreeNode<T> root)
+        {
+            if(root.Item.CompareTo(node.Item) == -1)
+            {
+                if(root.LeftChild == null)
+                {
+                    Items.Add(node);
+                    root.LeftChild = node;
+                    node.Parent = root;
+                }
+
+                else if(node.RightChild == null)
+                {
+                    Items.Add(node);
+                    root.RightChild = node;
+                    node.Parent = root;
+                }
+                else
+                {
+                    if(root.LeftChild.LeftChild == null || root.LeftChild.RightChild == null)
+                    {
+                        AddToHeap(node, root.LeftChild);
+                    }
+                    else if(root.RightChild.LeftChild == null || root.RightChild.RightChild == null)
+                    {
+                        AddToHeap(node, root.RightChild);
+                    }
+                    else
+                    {
+                        AddToHeap(node, root.LeftChild.LeftChild);
+                    }
+                }
+            }
+            else
+            {
+                items.Add(node);
+                ReOrderOnInsertion(node, root);
+            }
         }
     }
 }

@@ -48,6 +48,10 @@ namespace Library
             {
                 return _leftChild;
             }
+            set
+            {
+                _leftChild = value;
+            }
         }
 
         public virtual BinaryTreeNode<T> RightChild
@@ -55,6 +59,10 @@ namespace Library
             get
             {
                 return _rightChild;
+            }
+            set
+            {
+                _rightChild = value;
             }
         }
 
