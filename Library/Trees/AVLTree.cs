@@ -28,21 +28,25 @@ namespace Library.Trees
             {
                 return _root;
             }
-        }
-
-        public virtual int MaxHeight
-        {
-            get
+            set
             {
-                return GetHeight(Root);
+                _root = value;
             }
         }
 
-        public virtual int MinHeight
+        public virtual int LeftHeight
         {
             get
             {
-                return GetMinHeight(Root);
+                return GetHeight(Root.LeftChild);
+            }
+        }
+
+        public virtual int RightHeight
+        {
+            get
+            {
+                return GetHeight(Root.RightChild);
             }
         }
 
@@ -50,7 +54,7 @@ namespace Library.Trees
         {
             get
             {
-                return MaxHeight - MinHeight;
+                return LeftHeight - RightHeight;
             }
         }
 
@@ -66,7 +70,7 @@ namespace Library.Trees
                 return root;
             }
 
-            else if(root.Item.CompareTo(item) == -1 )
+            else if(root.Item.CompareTo(item) == 1 )
             {
                 return Search(root.LeftChild, item);
             }
@@ -76,9 +80,9 @@ namespace Library.Trees
             }
         }
 
-        public virtual int GetMinHeight(AVLTreeNode<T> root)
+        public virtual int GetHeight(AVLTreeNode<T> root)
         {
-            if(root.LeftChild == null || root.RightChild == null)
+            if(root == null)
             {
                 return 0;
             }
@@ -88,11 +92,10 @@ namespace Library.Trees
                 int leftHeight = GetHeight(root.LeftChild) + 1;
                 int rightHeight = GetHeight(root.RightChild) + 1;
 
-                if(leftHeight < rightHeight)
+                if(leftHeight > rightHeight)
                 {
                     return leftHeight;
                 }
-
                 else
                 {
                     return rightHeight;
@@ -109,61 +112,145 @@ namespace Library.Trees
             else
             {
                 Root.Insert(Root, item);
-                GetHeight(Root);
-                GetMinHeight(Root);
+                GetHeight(Root.LeftChild);
+                GetHeight(Root.RightChild);
                 AVLTreeNode<T> insertedNodeParent = Search(Root, item).Parent;
 
                 if(Balance > 1)
                 {
-                    if(item.CompareTo(insertedNodeParent.LeftChild.Item) == -1)
+                    //Left left case
+                    if(item.CompareTo(insertedNodeParent.Item) == -1)
                     {
                         RotateRight(insertedNodeParent);
                     }
 
-                    if(item.CompareTo(insertedNodeParent.LeftChild.Item) == 1)
+                    //Left right case
+                    if(item.CompareTo(insertedNodeParent.Item) == 1)
                     {
-                        insertedNodeParent.LeftChild = RotateLeft(insertedNodeParent.LeftChild);
+                        RotateLeft(insertedNodeParent.LeftChild);
                         RotateRight(insertedNodeParent);
-                    }
-
-                    if(item.CompareTo(insertedNodeParent.RightChild.Item) == 1)
+                    }           
+                }
+                else if (Balance < -1)
+                {
+                    //Right right case
+                    if(item.CompareTo(insertedNodeParent.Item) == 1)
                     {
                         RotateLeft(insertedNodeParent);
                     }
 
-                    if(item.CompareTo(insertedNodeParent.RightChild.Item) == 1)
+                    //Right left case   
+                    else if(item.CompareTo(insertedNodeParent.Item) == -1)
                     {
-                        insertedNodeParent.RightChild = RotateRight(insertedNodeParent.RightChild);
+                        RotateRight(insertedNodeParent.RightChild);
                         RotateLeft(insertedNodeParent);
                     }
                 }
             }
         }
 
-        public virtual AVLTreeNode<T> RotateLeft(AVLTreeNode<T> parent) 
+        public virtual void RotateLeft(AVLTreeNode<T> root)
         {
-            AVLTreeNode<T> node = parent.RightChild;
-            AVLTreeNode<T> otherNode = node.LeftChild;
-            node.LeftChild = node;
-            parent.RightChild = otherNode;
+            if(root == null)
+            {
+                return;
+            }
 
-            GetHeight(Root);
-            GetMinHeight(Root);
+            AVLTreeNode<T> pivot = root.RightChild;
 
-            return node;
+            if(pivot == null)
+            {
+                return;
+            }
+
+            else
+            {
+                AVLTreeNode<T> rootParent = root.Parent; //original parent of root node
+                bool isLeftChild = (rootParent != null) && rootParent.LeftChild == root; //whether the root was the parent's left node
+
+                //Rotate
+                root.RightChild = pivot.LeftChild;
+                pivot.LeftChild = root;
+
+                //Update parents
+                root.Parent = pivot;
+                pivot.Parent = rootParent;
+
+                if(root.RightChild != null)
+                {
+                    root.RightChild.Parent = root;
+                }
+
+                //Update the entire tree's Root if necessary
+                if(rootParent == Root)
+                {
+                    Root = pivot;
+                }
+
+                //Update the original parent's child node
+                if(isLeftChild)
+                {
+                    rootParent.LeftChild = pivot;
+                }
+                else if(rootParent != null)
+                {
+                    rootParent.RightChild = pivot;
+                }
+            }
         }
 
-        public virtual AVLTreeNode<T> RotateRight(AVLTreeNode<T> parent)
+        public virtual void RotateRight(AVLTreeNode<T> root)
         {
-            AVLTreeNode<T> node = parent.LeftChild;
-            AVLTreeNode<T> otherNode = node.RightChild;
-            node.RightChild = node;
-            parent.LeftChild = otherNode;
+            if(root == null)
+            {
+                return;
+            }
 
-            GetHeight(Root);
-            GetMinHeight(Root);
+            AVLTreeNode<T> pivot = root.LeftChild;
 
-            return node;
+            if(pivot == null)
+            {
+                return;
+            }
+            else
+            {
+                AVLTreeNode<T> rootParent = root.Parent; //original parent of root node
+                bool isLeftChild = (rootParent != null) && rootParent.LeftChild == root; //whether the root was the parent's left node
+
+                //Rotate
+                root.LeftChild = pivot.RightChild;
+                pivot.RightChild = root;
+
+                //Update parents
+                root.Parent = pivot;
+                pivot.Parent = rootParent;
+
+                if(root.LeftChild != null)
+                {
+                    root.LeftChild.Parent = root;
+                }
+
+                //Update the entire tree's Root if necessary
+                if(root == Root)
+                {
+                    Root.Item = pivot.Item;
+                }
+
+                //Update the original parent's child node
+                if(isLeftChild)
+                {
+                    rootParent.LeftChild = pivot;
+                }
+
+                else if(rootParent != null)
+                {
+                    rootParent.RightChild = pivot;
+                }
+
+                GetHeight(Root.LeftChild);
+                GetHeight(Root.RightChild);
+            }
+            }
         }
     }
-}
+

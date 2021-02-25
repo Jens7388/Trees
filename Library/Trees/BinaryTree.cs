@@ -53,6 +53,33 @@ namespace Library
             return count;
         }
 
+        public BinaryTreeNode<T> Search(BinaryTreeNode<T> root, T item)
+        {
+            if(root == null)
+            {
+                return null;
+            }
+
+            else if(root.Item.CompareTo(item) == 0)
+            {
+                return root;
+            }
+
+            if(root.LeftChild != null)
+            {
+                return Search(root.LeftChild, item);
+            }
+
+            if(root.RightChild != null)
+            {
+                return Search(root.RightChild, item);
+            }
+            else
+            {
+                return Search(Root.RightChild, item);
+            }
+        }
+
         public virtual void AddLeftChildTo(BinaryTreeNode<T> parent, T leftChildItem)
         {
             parent.AddLeftChild(leftChildItem);

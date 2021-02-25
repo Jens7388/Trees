@@ -28,6 +28,21 @@ namespace Tests
         }
         
         [Fact]
+        public void TestSearch()
+        {
+            BinaryTreeNode<int> root = new(2);
+            BinaryTree<int> tree = new(root);
+            tree.AddLeftChildTo(root, 1);
+            tree.AddRightChildTo(root, 2);
+            tree.AddLeftChildTo(root.LeftChild, 3);
+            tree.AddRightChildTo(root.LeftChild, 5);
+            tree.AddLeftChildTo(root.LeftChild.LeftChild, 8);
+            tree.AddLeftChildTo(root.LeftChild.LeftChild.LeftChild, 9);
+            tree.AddRightChildTo(root.RightChild, 4);
+            Assert.True(tree.Search(root, 5) != null);
+        }
+
+        [Fact]
         public void TestCount()
         {
             BinaryTreeNode<int> root = new(2);

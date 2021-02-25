@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Library.Nodes
 {
-    public class AVLTreeNode<T>: BinaryTreeNode<T> where T : IComparable<T>
+    public class AVLTreeNode<T>: TreeNode<T> where T : IComparable<T>
     {
-        protected new AVLTreeNode<T> _leftChild;
-        protected new AVLTreeNode<T> _rightChild;
+        protected AVLTreeNode<T> _leftChild;
+        protected AVLTreeNode<T> _rightChild;
         protected new AVLTreeNode<T> _parent;
 
         public AVLTreeNode()
@@ -22,38 +22,7 @@ namespace Library.Nodes
             _item = item;
         }
 
-        public virtual void Insert(AVLTreeNode<T> root, T item)
-        {
-            if(Item.CompareTo(item) > 0)
-            {
-                if(LeftChild == null)
-                {
-                    AddLeftChild(item);
-                    LeftChild.Parent = root;
-                }
-
-                else
-                {
-                    LeftChild.Insert(LeftChild, item);
-                }
-            }
-
-            else if(Item.CompareTo(item) < 0)
-            {
-                if(RightChild == null)
-                {
-                    AddRightChild(item);
-                    RightChild.Parent = root;
-                }
-
-                else
-                {
-                    RightChild.Insert(RightChild, item);
-                }
-            }
-        }
-
-        public new virtual AVLTreeNode<T> LeftChild
+        public virtual AVLTreeNode<T> LeftChild
         {
             get
             {
@@ -65,7 +34,7 @@ namespace Library.Nodes
             }
         }
 
-        public new virtual AVLTreeNode<T> RightChild
+        public virtual AVLTreeNode<T> RightChild
         {
             get
             {
@@ -77,7 +46,7 @@ namespace Library.Nodes
             }
         }
 
-        public virtual new AVLTreeNode<T> Parent
+        public new virtual AVLTreeNode<T> Parent
         {
             get
             {
@@ -88,5 +57,52 @@ namespace Library.Nodes
                 _parent = value;
             }
         }
+
+        public virtual void Insert(AVLTreeNode<T> root, T item)
+        {
+            if(Item.CompareTo(item) > 0)
+            {
+                if(LeftChild == null)
+                {
+                    AddLeftChild(item);
+                    root.LeftChild.Parent = root;
+                }
+
+                else
+                {
+                    root.LeftChild.Insert(LeftChild, item);
+                }
+            }
+
+            else if(Item.CompareTo(item) < 0)
+            {
+                if(RightChild == null)
+                {
+                    AddRightChild(item);
+                    root.RightChild.Parent = root;
+                }
+
+                else
+                {
+                    root.RightChild.Insert(RightChild, item);
+                }
+            }
+        }
+
+        public virtual void AddLeftChild(T item)
+        {
+            if(_leftChild == null)
+            {
+                _leftChild = new AVLTreeNode<T>(item);
+            }
+        }
+
+        public virtual void AddRightChild(T item)
+        {
+            if(_rightChild == null)
+            {
+                _rightChild = new AVLTreeNode<T>(item);
+            }
+        }    
     }
 }
